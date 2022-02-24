@@ -1,0 +1,124 @@
+{
+  "type" : "object",
+  "id" : "urn:jsonschema:io:gravitee:connector:jms:configuration:JMSConnectorConfiguration",
+  "properties" : {
+    "clientID": {
+      "title": "Client ID",
+      "description": "Sets the client identifier for the JMSContext's connection.",
+      "type": "string"
+    },
+    "username": {
+      "title": "Username",
+      "description": "To complete",
+      "type": "string"
+    },
+    "password": {
+      "title": "Password",
+      "description": "To complete",
+      "type": "string"
+    },
+    "consumer": {
+      "type": "object",
+      "title": "Consumer configuration",
+      "id": "urn:jsonschema:io:gravitee:connector:jms:model:ConsumerOptions",
+      "properties": {
+        "messageSelector": {
+          "title": "Message selector",
+          "description": "Only messages with properties matching the message selector expression are delivered.",
+          "type": "string"
+        },
+        "noLocal": {
+          "title": "No Local",
+          "description": "If true, and the destination is a topic, then the JMSConsumer will not receive messages published to the topic by its own connection.",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "x-schema-form": {
+        "open": false
+      }
+    },
+    "producer": {
+      "type": "object",
+      "title": "Producer configuration",
+      "id": "urn:jsonschema:io:gravitee:connector:jms:model:ProducerOptions",
+      "properties": {
+        "deliveryMode": {
+          "title": "Delivery mode",
+          "description": "Specifies the delivery mode of messages that are sent using this (PERSISTENT by default)",
+          "type": "string",
+          "default": "PERSISTENT",
+          "enum": [
+            "NON_PERSISTENT",
+            "PERSISTENT"
+          ],
+          "x-schema-form": {
+            "type": "select",
+            "titleMap": {
+              "NON_PERSISTENT": "NON_PERSISTENT",
+              "PERSISTENT": "PERSISTENT"
+            }
+          }
+        },
+        "messageType": {
+          "title": "Message type",
+          "description": "Specifies that messages sent using this producer will have their JMSType header value set to the specified message type. This will override any JMSType header value that is already set on the message being sent.",
+          "type": "string"
+        },
+        "timeToLive": {
+          "title": "Time to live (ms)",
+          "description": "Specifies the time to live of messages that are sent using this producer. This is used to determine the expiration time of a message. The expiration time of a message is the sum of the message's time to live and the time it is sent. For transacted sends, this is the time the client sends the message, not the time the transaction is committed.",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        "deliveryDelay": {
+          "title": "Delivery delay (ms)",
+          "description": "Sets the minimum length of time in milliseconds that must elapse after a message is sent before the JMS provider may deliver the message to a consumer.",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        "priority": {
+          "title": "Priority",
+          "description": "Specifies the priority of messages that are sent using this producer. The JMS API defines ten levels of priority value, with 0 as the lowest priority and 9 as the highest. Clients should consider priorities 0-4 as gradations of normal priority and priorities 5-9 as gradations of expedited priority. Priority is set to 4 by default.",
+          "type": "integer",
+          "default": 4,
+          "minimum": 0,
+          "maximum": 9
+        },
+        "disableMessageID": {
+          "title": "Disable message's ID",
+          "description": "Specifies whether message IDs may be disabled for messages that are sent using this producer.",
+          "type": "boolean",
+          "default": false
+        },
+        "disableMessageTimestamp": {
+          "title": "Disable message's timestamp",
+          "description": "Specifies whether message timestamps may be disabled for messages that are sent using this producer. Since timestamps take some effort to create and increase a message's size, some JMS providers may be able to optimise message overhead if they are given a hint that the timestamp is not used by an application.",
+          "type": "boolean",
+          "default": false
+        },
+        "correlationID": {
+          "title": "Correlation ID",
+          "description": "Specifies that messages sent using this producer will have their JMSCorrelationID header value set to the specified correlation ID, where correlation ID is specified as a String. This will override any JMSCorrelationID header value that is already set on the message being sent.",
+          "type": "string"
+        }
+      },
+      "x-schema-form": {
+        "open": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "patternProperties": {
+    "backup": true,
+    "healthcheck": true,
+    "inherit": true,
+    "name": true,
+    "target": true,
+    "tenants": true,
+    "type": true,
+    "weight": true
+  }
+}
